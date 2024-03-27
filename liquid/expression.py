@@ -80,7 +80,8 @@ class Empty(Expression):
         if isinstance(other, Empty):
             return True
         if isinstance(other, dict) and other:
-            return not (other or {}).get("items")
+            if "items" in other:
+                return not other["items"]
         if isinstance(other, (list, dict, str)) and not other:
             return True
         return False
