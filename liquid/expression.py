@@ -79,6 +79,8 @@ class Empty(Expression):
     def __eq__(self, other: object) -> bool:
         if isinstance(other, Empty):
             return True
+        if isinstance(other, dict) and other:
+            return not (other or {}).get("items")
         if isinstance(other, (list, dict, str)) and not other:
             return True
         return False
