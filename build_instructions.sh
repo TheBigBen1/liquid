@@ -1,3 +1,4 @@
+rm -rf python-lib
 pip wheel . -w dist
 mkdir -p python-lib/python
 WHEEL_FILE=$(find dist -name 'python_liquid*.whl' -print -quit)
