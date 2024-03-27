@@ -1093,6 +1093,7 @@ def is_truthy(obj: Any) -> bool:
         obj = obj.__liquid__()
     return _is_py_falsy_number(obj) or obj not in (False, None)
 
+NoneType = type(None)
 
 def compare(left: object, op: str, right: object) -> bool:  # noqa: PLR0911, PLR0912
     """Compare _left_ with _right_ according to Liquid semantics."""
@@ -1112,6 +1113,11 @@ def compare(left: object, op: str, right: object) -> bool:  # noqa: PLR0911, PLR
             raise LiquidTypeError(f"invalid operator for types '{_left} {op} {_right}'")
 
         raise LiquidTypeError(f"unknown operator: {type(_left)} {op} {type(_right)}")
+
+    if isinstance(left, (NoneType, Undefined)) and isinstance(right, (int, )):
+        left = 0
+    if isinstance(right, (NoneType, Undefined)) and isinstance(left, (int, )):
+        right = 0
 
     if op == "==":
         return _eq(left, right)

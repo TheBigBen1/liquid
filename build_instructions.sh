@@ -5,4 +5,5 @@ pip install "$WHEEL_FILE" -t python-lib/python
 cd python-lib
 zip -r python-liquid-layer.zip .
 cd ..
+pip uninstall python-liquid -y
 pip install $WHEEL_FILE
