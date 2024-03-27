@@ -1115,6 +1115,12 @@ def compare(left: object, op: str, right: object) -> bool:  # noqa: PLR0911, PLR
 
         raise LiquidTypeError(f"unknown operator: {type(_left)} {op} {type(_right)}")
 
+    if op in ["<", ">", "<=", ">="]:
+        if isinstance(left, str):
+            left = convert_str_to_number(left)
+        if isinstance(right, str):
+            right = convert_str_to_number(right)
+    
     if isinstance(left, (NoneType, Undefined)) and isinstance(right, (int, float, Decimal)):
         left = 0
     if isinstance(right, (NoneType, Undefined)) and isinstance(left, (int, float, Decimal)):
@@ -1156,6 +1162,14 @@ def compare(left: object, op: str, right: object) -> bool:  # noqa: PLR0911, PLR
 
     return _type_error(left, right)
 
+def convert_str_to_number(num: str) -> Union[int, float]:
+    if num.isdigit():
+        return int(num)
+    try:
+        num = float(num)
+    except ValueError:
+        pass
+    return num
 
 def _eq(left: object, right: object) -> bool:
     if isinstance(right, (Empty, Blank)):
