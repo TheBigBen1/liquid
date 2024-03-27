@@ -1115,9 +1115,9 @@ def compare(left: object, op: str, right: object) -> bool:  # noqa: PLR0911, PLR
 
         raise LiquidTypeError(f"unknown operator: {type(_left)} {op} {type(_right)}")
 
-    if isinstance(left, (NoneType, Undefined)) and isinstance(right, (int, )):
+    if isinstance(left, (NoneType, Undefined)) and isinstance(right, (int, float, Decimal)):
         left = 0
-    if isinstance(right, (NoneType, Undefined)) and isinstance(left, (int, )):
+    if isinstance(right, (NoneType, Undefined)) and isinstance(left, (int, float, Decimal)):
         right = 0
 
     if op == "==":
