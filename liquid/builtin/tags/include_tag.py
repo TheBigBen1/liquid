@@ -242,8 +242,8 @@ class IncludeTag(Tag):
                     f"expected a comma separated list of arguments, found {typ}",
                     linenum=tok.linenum,
                 )
-        if "anchor" in args:
-            name = StringLiteral(name.value + args["anchor"].value)
+        #if "anchor" in args:
+        #    name = StringLiteral(name.value + args["anchor"].value)
         return self.node_class(tok, name=name, var=identifier, alias=alias, args=args)
 
 
