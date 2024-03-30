@@ -13,7 +13,7 @@ from liquid.context import Context
 from liquid.exceptions import LiquidSyntaxError
 from liquid.expression import Expression
 from liquid.expression import Identifier
-from liquid.expression import Literal
+from liquid.expression import Literal, StringLiteral
 from liquid.expressions import TokenStream as ExprTokenStream
 from liquid.expressions.common import parse_identifier
 from liquid.expressions.common import parse_string_or_identifier
@@ -242,7 +242,8 @@ class IncludeTag(Tag):
                     f"expected a comma separated list of arguments, found {typ}",
                     linenum=tok.linenum,
                 )
-
+        if "anchor" in args:
+            name = StringLiteral(name.value + args["anchor"].value)
         return self.node_class(tok, name=name, var=identifier, alias=alias, args=args)
 
 
