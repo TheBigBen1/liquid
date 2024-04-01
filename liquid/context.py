@@ -170,6 +170,8 @@ async def _liquid_last_async(
             return obj[-1]
         raise
 
+def convert_rgba_to_color(rgba):
+    return f"#{rgba['red']:02x}{rgba['green']:02x}{rgba['blue']:02x}".upper()
 
 class Context:
     """A template render context.
@@ -306,7 +308,10 @@ class Context:
 
         if items:
             try:
-                return reduce(self.getitem, items, obj)
+                returned_item = reduce(self.getitem, items, obj)
+                if isinstance(returned_item, dict) and returned_item.get("type") == "hex_color":
+                    return convert_rgba_to_color(returned_item)
+                return returned_item
             except (KeyError, IndexError, TypeError) as err:
                 if isinstance(err, KeyError):
                     hint = (
