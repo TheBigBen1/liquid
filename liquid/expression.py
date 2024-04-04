@@ -110,7 +110,7 @@ class Blank(Expression):
             return True
         if isinstance(other, (list, dict)) and not other:
             return True
-        if isinstance(other, Blank):
+        if isinstance(other, (Blank, Undefined)):
             return True
         return False
 
